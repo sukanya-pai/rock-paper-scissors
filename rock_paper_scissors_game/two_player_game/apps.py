@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class InterfaceConfig(AppConfig):
+class TwoPlayerGameConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'interface'
+    name = 'two_player_game'
