@@ -1,0 +1,242 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<main class="container-fluid">
+  <div class="col-lg-12">
+    <section class="mt-5-em mb-5">
+      <div class="row text-center m-auto w-75">
+        <div class="play-section">
+            <h3 class="form-label fw-light mb-3">Play Rock, Paper, Scissors </h3>
+            <div class="progress progress-bar-height">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <form id="game_form" action='start' method='post'>
+                <fieldset>
+                  {% csrf_token %}
+                  <input type="hidden" name="player1name" value={{player1name}}>
+                  <input type="hidden" name="mode" value={{mode}}>
+
+                  <div class="mt-3">
+                    <div>
+                    <label for="player1option" class="form-label">Please select one option for {{player1name}}
+                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="Option Noted" id="pl1-info">
+                                <img class="gif" src="https://c.tenor.com/0AVbKGY_MxMAAAAM/check-mark-verified.gif"/>
+                          </span>
+                    </label>
+                  </div>
+                    <div>
+                      <div class="form-check form-check-inline">
+                        <input type="radio" class="btn-check" id="pl1-rock" autocomplete="off" name="player1option" value="rock" 
+                                            required="required" >
+                        <label class="btn btn-outline-primary game-options shadow-none" for="pl1-rock">
+                          <div class="mt-3">
+                            <i class="fa fa-hand-rock-o mode-icon" aria-hidden="true"></i>
+                          </div>
+                          <div class="mt-3">
+                            Rock
+                          </div>
+                        </label>
+                      </div>    
+                      <div  class="form-check form-check-inline">
+                        <input type="radio" class="btn-check" id="pl1-paper" autocomplete="off" name="player1option" value="paper" 
+                        required="required" >
+                        <label class="btn btn-outline-primary game-options shadow-none" for="pl1-paper">
+                            <div class="mt-3">
+                              <i class="fa fa-hand-paper-o mode-icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="mt-3">
+                            Paper
+                            </div>
+                        </label>
+                      </div>
+                      <div  class="form-check form-check-inline">
+                        <input type="radio" class="btn-check" id="pl1-scissors" autocomplete="off" name="player1option" value="scissors" 
+                        required="required" >
+                        <label class="btn btn-outline-primary game-options shadow-none" for="pl1-scissors">
+                            <div class="mt-3">
+                              <i class="fa fa-hand-scissors-o mode-icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="mt-3">
+                            Scissors
+                            </div>
+                        </label>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="mt-5">
+                    <input type="button" class="next btn btn-info btn-lg" value="Next" />
+                  </div>
+                </fieldset>
+                <fieldset>
+                  {% if mode == 'computer' %}
+                    <h4 class="fw-light mt-5">You have chosen to play with computer.</h4>
+                  {% endif %}
+
+                  {% if mode == 'player' %}
+                    <div>
+                      <input type="hidden" name="player2name" value={{player2name}}>
+                      <div class="mt-5">
+                        <div>
+                        <label for="player2option" class="form-label">Please select one option for {{player2name}}
+                          <span data-bs-toggle="tooltip" data-bs-placement="top" title="Option Noted" id="pl2-info">
+                                  <img class="gif" src="https://c.tenor.com/0AVbKGY_MxMAAAAM/check-mark-verified.gif"/>
+                            </span>
+                        </label>
+                      </div>
+                        <div  class="form-check form-check-inline">
+                          <input type="radio" class="btn-check" id="pl2-rock" autocomplete="off" name="player2option" value="rock" 
+                                              required="required" >
+                          <label class="btn btn-outline-primary game-options shadow-none" for="pl2-rock">
+                            <div class="mt-3">
+                              <i class="fa fa-hand-rock-o mode-icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="mt-3">
+                              Rock
+                            </div>
+                          </label>
+                        </div>
+
+                        <div  class="form-check form-check-inline">
+                          <input type="radio" class="btn-check" id="pl2-paper" autocomplete="off" name="player2option" value="paper" 
+                          required="required" >
+                          <label class="btn btn-outline-primary game-options shadow-none" for="pl2-paper">
+                              <div class="mt-3">
+                                <i class="fa fa-hand-paper-o mode-icon" aria-hidden="true"></i>
+                              </div>
+                              <div class="mt-3">
+                              Paper
+                              </div>
+                          </label>
+                        </div>
+
+                        <div  class="form-check form-check-inline">
+                          <input type="radio" class="btn-check" id="pl2-scissors" autocomplete="off" name="player2option" value="scissors" 
+                          required="required" >
+                          <label class="btn btn-outline-primary game-options shadow-none" for="pl2-scissors">
+                              <div class="mt-3">
+                                <i class="fa fa-hand-scissors-o mode-icon" aria-hidden="true"></i>
+                              </div>
+                              <div class="mt-3">
+                              Scissors
+                              </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  <div class="mt-5">
+                    <input type="button" name="previous" class="previous btn btn-default" value="Previous" />
+                    <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-play" aria-hidden="true"></i>
+                      Save and Play</button>
+                  </div>
+                </fieldset>
+              </form>
+        </div>
+        <div>
+            {% if messages %}
+            {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+          <h2 class="fw-light"><u>Scoreboard</u></h2>
+          <div>
+              <label class="btn btn-outline-primary game-options shadow-none rounded-circle">
+                <div class="mt-3">
+                  <i class="fa fa-user mode-icon" aria-hidden="true"></i>
+                </div>
+                <div class="mt-3">
+                {{player1name}}
+                </div>
+                <div class="mt-3 score-font">
+                  {{ player1score|default:0 }}
+                </div>
+              </label>
+              
+              <i class="fa fa-bolt m-5 vs-icon" aria-hidden="true"></i>
+
+
+              <label class="btn btn-outline-primary game-options shadow-none rounded-circle">
+                <div class="mt-3">
+                  {% if mode == 'player' %}
+                  <i class="fa fa-user mode-icon" aria-hidden="true"></i>
+                  {% elif mode == 'computer' %}
+                  <i class="fa fa-desktop mode-icon" aria-hidden="true"></i>
+                  {% endif %}
+                </div>
+                <div class="mt-3">
+                  {{player2name}}
+                </div>
+                <div class="mt-3 score-font">
+                  {{ player2score|default:0 }}
+                </div>
+              </label>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+{% endblock body %}
+
+{% block jquery-script %}
+<!--Was getting uncaught $ reference errors when the script was in index.html. 
+  When everything was at one place, The script was working only in home_page.html and not in game.html because it couldnt find the first element by ID in the current page
+
+-->
+<script>
+    $(document).ready(function() {
+          document.getElementById("pl1-info").style.display='none';
+          // change to be checked for every radio button field of rock paper scissors
+          $('#pl1-rock , #pl1-paper , #pl1-scissors').change( function() {
+            console.log("pl1 option changed")
+            document.getElementById("pl1-info").style.display='inline-block';
+          });
+
+          pl2_info_element = document.getElementById("pl2-info");
+          if(pl2_info_element){
+            pl2_info_element.style.display='none';
+            // change to be checked for every radio button field of rock paper scissors
+            $('#pl2-rock , #pl2-paper , #pl2-scissors').change( function() {
+              console.log("pl2 option changed")
+              pl2_info_element.style.display='inline-block';
+            });
+          }
+          
+
+          /* For 2 step form*/
+          var current = 1,current_step,next_step,steps;
+          steps = $("fieldset").length;
+          $(".next").click(function(){
+            current_step = $(this).parent().parent();
+            next_step = $(this).parent().parent().next();
+            next_step.show();
+            current_step.hide();
+            setProgressBar(++current);
+          });
+          $(".previous").click(function(){
+            current_step = $(this).parent().parent();
+            next_step = $(this).parent().parent().prev();
+            next_step.show();
+            current_step.hide();
+            setProgressBar(--current);
+          });
+          setProgressBar(current);
+          // Change progress bar action
+          function setProgressBar(curStep){
+            var percent = parseFloat(100 / steps) * curStep;
+            percent = percent.toFixed();
+            $(".progress-bar")
+              .css("width",percent+"%");   
+          }
+    });
+</script>
+{% endblock %}

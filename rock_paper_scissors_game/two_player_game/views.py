@@ -3,7 +3,8 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-from two_player_game.models import Player, Result
+from two_player_game.models import *
+from django.db.models import F
 
 # Python Import
 import random
@@ -12,73 +13,106 @@ log = logging.getLogger(__name__)
 
 def home(request):
     '''
-    homepage and start game logic
+    homepage and redirect to start game logic
     '''
     if request.method=='POST':
-        playername = request.POST.get('name')
-        if User.objects.filter(username__iexact=playername):
-            messages.warning(request, 'This name already exists, please try another one.')
-            return HttpResponseRedirect(request.path_info)
-        create_user = User.objects.create(first_name=playername, username=playername)
-        create_player = Player.objects.create(name=playername, user=create_user)
-        return redirect('game_inputs')
+        details = {
+            'player1name':request.POST.get('player1name'),
+            'mode':request.POST.get('mode'),
+            'player2name':request.POST.get('player2name','Computer')
+        }
+        return render(request,'game.html',details)
 
     return render(request, 'home_page.html')
 
+def about(request):
+    '''
+    about page
+    '''
+    return render(request, 'about.html')
+
+def contact(request):
+    '''
+    contact page
+    '''
+    return render(request, 'contact.html')
+
+
 def game(request):
-    '''
-    Rock, paper and scissor logic
-    '''
-    gamelist = ['rock', 'paper', 'scissors']
-    bot_action = random.choice(gamelist)
-    user = Player.objects.all().last()
-
     if request.method == 'POST':
-        user_answer = request.POST.get('name')
+        details = {
+            'player1name':request.POST.get('player1name'),
+            'mode':request.POST.get('mode'),
+            'player2name':request.POST.get('player2name','Computer'),
+        }
+        
+        # player1 = Player.objects.get_or_create(name=details['player1name'])
+        # player2 = Player.objects.get_or_create(name=details['player2name'])
 
-        if user_answer == bot_action:
-            messages.info(request, f"Both players selected. It's a tie!")
-            result = Result.objects.create(player=user, bot_move=bot_action, user_move=user_answer, status='Tie')
-            log.debug("Both players selected. It's a tie!")
+        player1option = request.POST.get('player1option')
+        # Play with player mode
+        if details['mode'] == 'player':
+            player2option = request.POST.get('player2option')
+            messages.info(request, f"You selected {player1option}, {details['player2name']} selected {player2option}" )
+        else:
+            player2option = get_computer_option()
+            messages.info(request, f"You selected {player1option}, computer selected {player2option}")
+        
+        
+        # process the game
+        result = process_game(request, player1option, player2option)
 
-        elif user_answer == "rock":
-            if bot_action == "scissors":
-                messages.success(request, "Rock smashes scissors! You win!")
-                result = Result.objects.create(player=user, bot_move=bot_action, user_move=user_answer, status='Win')
-                log.debug(f"Rock smashes scissors! You win! - Actions: Bot - {bot_action} User - {user_answer}")
-            else:
-                result = Result.objects.create(player=user, bot_move=bot_action, user_move=user_answer, status='Lose')
-                messages.info(request, "Paper covers rock! You lose.")
-                log.debug(f"Paper covers rock! You lose. Actions: Bot - {bot_action} User - {user_answer}" )
+        # # Save details
+        # game = Game(player1 = player1,
+        #             player2 = player2,
+        #             player1_move = player1option,
+        #             player2_move = player2option,
+        #             winner = result['winner'])
+        # game.save()
 
-        elif user_answer == "paper":
-            if bot_action == "rock":
-                messages.success(request, "Paper covers rock! You win!")
-                result = Result.objects.create(player=user, bot_move=bot_action, user_move=user_answer, status='Win')
-                log.debug(f"Paper covers rock! You win! Actions: Bot - {bot_action} User - {user_answer}")
-            else:
-                result = Result.objects.create(player=user, bot_move=bot_action, user_move=user_answer, status='Lose')
-                messages.info(request, "Scissors cuts paper! You lose.")
-                log.debug(f"Scissors cuts paper! You lose. Actions: Bot - {bot_action} User - {user_answer}")
+        # # Save score
+        # player1_score = GameResult(game = game_id, player = player1, score = F('player1score') + 1)
+        # player1_score.save()
+        # player2_score = GameResult(game = game_id, player = player2, score = F('player2score') + 1)
+        # player2_score.save()
 
-        elif user_answer == "scissors":
-            if bot_action == "paper":
-                result = Result.objects.create(player=user, bot_move=bot_action, user_move=user_answer, status='Win')
-                messages.success(request, "Scissors cuts paper! You win!")
-                log.debug(f"Scissors cuts paper! You win! Actions: Bot - {bot_action} User - {user_answer}")
-            else:
-                result = Result.objects.create(player=user, bot_move=bot_action, user_move=user_answer, status='Lose')
-                messages.info(request, "Rock smashes scissors! You lose.")
-                log.debug(f"Rock smashes scissors! You lose. Actions: Bot - {bot_action} User - {user_answer}")
-    
-    return render(request, 'game_inputs.html', {'user':user})
-
+        return render(request,'game.html',details)
 
 
-def result(request):
-    '''
-    All users results
-    '''
-    res = Result.objects.all().order_by('-id')
-    context = {'res':res}
-    return render(request, 'result.html', context)
+
+def get_computer_option():
+    """
+    Function to get computer's option
+    """
+    gamelist = ['rock', 'paper', 'scissors']
+    computer_option = random.choice(gamelist)
+    return computer_option
+
+def process_game(request, player_one_option, player_two_option):
+    winner = None
+    player1score = 0
+    player2score = 0
+
+    if player_one_option == player_two_option:
+        messages.info(request, f"Both players selected same option. It's a tie!")
+        log.debug("Both players selected same option. It's a tie!")
+    elif player_one_option == "rock":
+        if player_two_option == "scissors":
+            winner = player1name
+            messages.success(request, "Rock smashes scissors! You win!")
+        else:
+            messages.info(request, "Paper covers rock! You lose.")
+    elif player_one_option == "paper":
+        if player_two_option == "rock":
+            messages.success(request, "Paper covers rock! You win!")
+        else:
+            messages.info(request, "Scissors cuts paper! You lose.")
+
+    elif player_one_option == "scissors":
+        if player_two_option == "paper":
+            messages.success(request, "Scissors cuts paper! You win!")
+        else:
+            messages.info(request, "Rock smashes scissors! You lose.")
+        
+
+
