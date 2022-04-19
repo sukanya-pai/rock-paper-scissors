@@ -2,12 +2,14 @@
 The project deals with implementing Rock Paper Scissors game. The rules of the game is shown in the image below (Source: Wikipedia):
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Rock-paper-scissors.svg/1200px-Rock-paper-scissors.svg.png)
 
+#### Application Flowchart
 The flowchart below represents the flow of the game:
-![](./RockPaperScissors-Basic.png)
 - We will have 2 modes - play with computer and play with player
 - If computer mode is selected, the user will be playing with the computer which follows the logic of randomly selecting the options and matching it against the rules of the game and the user action selected.
 - If player mode is selected, we take the username of player 2, take their inputs and make them select the option and the actions are then compared with the rules of the game to announce the verdict.
 - Score board shows the scores of both the players for that game session. 
+
+![](./RockPaperScissors-Basic.png)
 
 ### Pre-requisites
 - Python 3+ version (install from here -> https://www.python.org/downloads/)
