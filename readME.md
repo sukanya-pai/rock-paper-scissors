@@ -1,7 +1,6 @@
 ### Scope of the application
-The project deals with implementing Rock Paper Scissors game. The rules of the game is shown in the image below:
+The project deals with implementing Rock Paper Scissors game. The rules of the game is shown in the image below (Source: Wikipedia):
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Rock-paper-scissors.svg/1200px-Rock-paper-scissors.svg.png)
-Source: Wikipedia
 
 The flowchart below represents the flow of the game:
 ![](./RockPaperScissors-Basic.png)
