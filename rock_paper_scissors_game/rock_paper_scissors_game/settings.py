@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # game apps
-    'two_player_game'
+    'two_player_game',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
