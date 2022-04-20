@@ -42,15 +42,16 @@ Additional:
     - To get the database schema of only specific app, run the command: `./manage.py graph_models two_player_game -o rps_schema.png` 
     - The schema would be generated in the project location. 
 
-### What was achieved in 3 hours?
-- Requirement freeze and database design plan exercise for two player game
-- Development of in memory game application - both UI and backend - which takes inputs from user, processes it and returns result and updates score board
-    - While doing this encountered interesting issues in UI. Debugged it and fixed the issues.
-- Extending the in memory game to database based design to allow saving game data for future use.
-- Implemented backend for saving the data and encountered minor implementation related issues in django queries and worked on fixing it.
+### What was achieved?
+- In 3 hours:
+    - Requirement freeze and database design plan exercise for two player game
+    - Development of in memory game application - both UI and backend - which takes inputs from user, processes it and returns result and updates score board
+        - While doing this encountered interesting issues in UI. Debugged it and fixed the issues.
+    - Extending the in memory game to database based design to allow saving game data for future use.
+    - Implemented backend for saving the data and encountered minor implementation related issues in django queries and worked on fixing it.
 - Took additional 1-2 hours for the following:
     - Implemented About Page and Contact Us page to provide more details regarding the application in UI.
-    - Noticed tight coupling in database design which didnt let the current design to be extended to n-player game without need for adding columns. Worked on revamping the database design schema to support multi player approach for future. 
+    - Noticed tight coupling in database design which didnt let the current design to be extended to n-player game without need for adding columns. Worked on revamping the database design schema and backend logic to support multi player approach for future. 
 
 ### Additional features that could be implemented if I had more time:
 - Would have deployed the application on heroku. I have started going through heroku concepts and configuration steps for deploying the application. 
