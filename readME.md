@@ -13,7 +13,8 @@ The flowchart below represents the flow of the game:
 
 The database schema for the application is shown below:
 ![](./rps_schema.png)
-Here, I have used 3 tables - 
+
+Here, 3 tables have been used - 
 - Player: to store player information
 - Game : to store the game details - player and score
 - GameMove: takes game id and player as foreign key and store the player moves during the game.
