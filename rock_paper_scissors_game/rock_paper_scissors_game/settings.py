@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'rock_paper_scissors_game.wsgi.application'
 #     }
 # }
 import dj_database_url
-
+import os
 DATABASES = {
       'default': dj_database_url.config(
           default='sqlite:////{0}'.format(os.path.join(BASE_DIR, 'db.sqlite3'))
