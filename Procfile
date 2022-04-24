@@ -1,1 +1,1 @@
-web: gunicorn rock_paper_scissors_game.wsgi
+web: gunicorn --pythonpath rock_paper_scissors_game rock_paper_scissors_game.wsgi
