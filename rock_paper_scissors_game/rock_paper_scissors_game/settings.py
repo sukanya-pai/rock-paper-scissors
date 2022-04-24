@@ -57,7 +57,8 @@ ROOT_URLCONF = 'rock_paper_scissors_game.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['screens'],
+        # 'DIRS': ['screens'],
+        'DIRS':[os.path.join(BASE_DIR, 'screens')]
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
