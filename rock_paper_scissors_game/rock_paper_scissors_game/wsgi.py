@@ -15,5 +15,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rock_paper_scissors_game.settin
 
 # application = get_wsgi_application()
 
-from whitenoise.django import DjangoWhiteNoise
-application = DjangoWhiteNoise(application)
+from whitenoise import WhiteNoise
+
+application = WhiteNoise(application)
