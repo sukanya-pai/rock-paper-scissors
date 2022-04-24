@@ -55,6 +55,7 @@ Additional:
 
 ### Additional features that could be implemented if I had more time:
 - Would have deployed the application on heroku. I have started going through heroku concepts and configuration steps for deploying the application. 
+    - Latest update: Deployed the application to heroku - https://play-new-rock-paper-scissors.herokuapp.com/rock-paper-scissor/home 
 - Would have developed a page that displays detailed user statistics. Backend database stores data, just have to develop UI and logic to retrieve and display the data.
 - Would have developed Login (Authorization) component for the application so that user could login to their profile and go to the game easily and keep track of everything that they were part of securely. Currently it is achieved by using just the usernames which wouldnt be secure as anyone with the user name can access the game if they had access to backend resources.
 - Due to shortage of time, I have developed simple UI screen with some styles and features and focus was more on functionalities to be achieved. If there was more time, would have worked on beautifying the page with better visuals for score boards or for taking inputs. 
