@@ -19,8 +19,12 @@ def home(request):
         details = {
             'player1name':request.POST.get('player1name'),
             'mode':request.POST.get('mode'),
-            'player2name':request.POST.get('player2name','Computer')
         }
+        # get player 2 details
+        if details['mode']=='computer':
+            details['player2name']='Computer'
+        else:
+            details['player2name']=request.POST.get('player2name')
         # Get latest game ID
         game_id = Game.objects.order_by('-game_id').values_list('game_id',flat=True)
         game_id = 1 if not game_id else (game_id[0]+1)
@@ -60,16 +64,17 @@ def game(request):
         details = {
             'player1name':request.POST.get('player1name'),
             'mode':request.POST.get('mode'),
-            'player2name':request.POST.get('player2name','Computer'),
             'game_id' : request.POST.get('game_id')
         }
 
         player1option = request.POST.get('player1option')
         # Play with player mode
         if details['mode'] == 'player':
+            details['player2name']=request.POST.get('player2name')
             player2option = request.POST.get('player2option')
             messages.info(request, f"You selected {player1option}, {details['player2name']} selected {player2option}" )
         else:
+            details['player2name']='Computer'
             player2option = get_computer_option()
             messages.info(request, f"You selected {player1option}, computer selected {player2option}")
         
