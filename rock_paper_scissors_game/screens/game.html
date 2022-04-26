@@ -5,8 +5,8 @@
 <main class="container-fluid">
   <div class="col-lg-12">
     <section class="mt-5-em mb-5">
-      <div class="row text-center m-auto w-75">
-        <div class="play-section">
+      <div class="row text-center m-auto">
+        <div class="play-section pt-3">
             <h3 class="form-label fw-light mb-3">Play Rock, Paper, Scissors </h3>
             <div class="progress progress-bar-height">
               <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
@@ -66,9 +66,10 @@
 
                     </div>
                   </div>
-                  <div class="mt-5 float-end">
-                    <input type="button" class="cancel btn btn-danger btn-lg" value="End Game" />
-                    <input type="button" class="next btn btn-info btn-lg" value="Next" />
+                  <div class="mt-5 mb-3 float-end">
+                      <input type="button" class="cancel btn btn-danger btn-lg me-3" value="End Game" />
+                  
+                      <input type="button" class="next btn btn-info btn-lg" value="Next" />
                   </div>
                 </fieldset>
                 <fieldset>
@@ -128,12 +129,10 @@
                       </div>
                     </div>
                   {% endif %}
-
-                  <div class="mt-5  float-end">
-                    <input type="button" class="cancel btn btn-danger btn-lg" value="End Game" />
-                    <!-- <input type="button" name="previous" class="previous btn btn-default" value="Previous" /> -->
-                    <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-play" aria-hidden="true"></i>
-                      Save and Play</button>
+                  <div class="mt-5 mb-3 float-end">
+                      <input type="button" class="cancel btn btn-danger btn-lg me-3" value="End Game" />
+                      <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-play" aria-hidden="true"></i>
+                        Save and Play</button>
                   </div>
                 </fieldset>
               </form>
@@ -141,7 +140,7 @@
         <div>
             {% if messages %}
             {% for message in messages %}
-            <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+            <div {% if message.tags %} class="mt-3 alert alert-{{ message.tags }}"{% endif %} role="alert">
               {{ message }}
             </div>
             {% endfor %}
